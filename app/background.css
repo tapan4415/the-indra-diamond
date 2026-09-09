@@ -1,0 +1,7 @@
+body{background-color:#080807;background-image:linear-gradient(180deg,rgba(4,4,3,.44),rgba(4,4,3,.7)),url("/app-bg.png");background-size:cover;background-position:center center;background-repeat:no-repeat;background-attachment:fixed}
+main{position:relative;background:radial-gradient(circle at 50% 42%,transparent 0,rgba(0,0,0,.14) 62%,rgba(0,0,0,.42) 100%)}
+main:before{content:"";position:fixed;inset:-10%;pointer-events:none;background:linear-gradient(112deg,transparent 25%,rgba(174,141,76,.055) 42%,transparent 58%);animation:archive-light 14s ease-in-out infinite alternate}
+header,.paper,footer{position:relative;z-index:1}.paper{background:linear-gradient(145deg,rgba(255,255,255,.045),transparent 35%),rgba(16,16,12,.91);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+@keyframes archive-light{from{transform:translate3d(-3%,0,0)}to{transform:translate3d(3%,0,0)}}
+@media(max-width:700px){body{background-attachment:scroll;background-position:center top}.paper{background:linear-gradient(145deg,rgba(255,255,255,.04),transparent 35%),rgba(13,13,10,.92)}}
+@media(prefers-reduced-motion:reduce){main:before{animation:none}}
