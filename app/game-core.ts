@@ -1,0 +1,12 @@
+export type Team="RED"|"BLUE"|"GREEN"|"YELLOW"; export type Ch=1|2|3|4;
+export const G={
+RED:{key:"LOTUS47",route:[["8317",1],["4128",2],["7619",3],["2527",4]] as [string,Ch][],time:"11:48 PM",courier:["LEELA VARMA","T27"],trip:["DELHI","BOMBAY","COLOMBO","LONDON","VANCOUVER","SAN FRANCISCO"]},
+BLUE:{key:"MONSOON47",route:[["4137",2],["2536",4],["8326",1],["7628",3]] as [string,Ch][],time:"11:51 PM",courier:["LAKSHMAN VOHRA","S14"],trip:["DELHI","KARACHI","ALEXANDRIA","LONDON","BOSTON","SAN FRANCISCO"]},
+GREEN:{key:"CEDAR47",route:[["7646",3],["8344",1],["2554",4],["4155",2]] as [string,Ch][],time:"11:54 PM",courier:["LALITA VAIDYA","R32"],trip:["DELHI","CALCUTTA","SINGAPORE","LONDON","HONOLULU","SAN FRANCISCO"]},
+YELLOW:{key:"SAFFRON47",route:[["2563",4],["7655",3],["4164",2],["8353",1]] as [string,Ch][],time:"11:57 PM",courier:["LOKESH VERMA","G18"],trip:["DELHI","MADRAS","CAIRO","LONDON","NEW YORK","SAN FRANCISCO"]}} as const;
+export const C:Record<Ch,{r:string;t:string;q:string;d:string}>={1:{r:"I",t:"THE MISSING HOUR",q:"AT WHAT EXACT TIME WAS THE INDRA DIAMOND REMOVED FROM SECURED TREASURY CUSTODY?",d:"8"},2:{r:"II",t:"THE COURIER",q:"IDENTIFY THE INDIVIDUAL WHO CARRIED THE BLACK DIPLOMATIC CASE FROM THE SECURED VAULT.",d:"4"},3:{r:"III",t:"THE JOURNEY",q:"RECONSTRUCT THE SIX LOCATIONS THROUGH WHICH THE SECURED DIPLOMATIC CONSIGNMENT PASSED, IN CHRONOLOGICAL ORDER.",d:"7"},4:{r:"IV",t:"THE CUSTODIAN",q:"WHAT ONE-WORD CODENAME WAS ASSIGNED TO THE CLASSIFIED OPERATION?",d:"2"}};
+export const clean=(s:string)=>s.toUpperCase().trim().replace(/[^A-Z0-9]/g,"");
+export const city=(s:string)=>({MUMBAI:"BOMBAY",KOLKATA:"CALCUTTA",CHENNAI:"MADRAS",NEWDELHI:"DELHI"}[clean(s)]||clean(s));
+export function authenticate(value:string):Team|undefined{return (Object.keys(G) as Team[]).find(t=>G[t].key===clean(value))}
+export function recordFailure(previous:number,now:number){const attempts=previous+1;return {attempts,cooldownUntil:attempts>=3?now+300000:0}}
+export function validateConclusion(team:Team,ch:Ch,data:{answer?:string;digits?:string[];meridiem?:string;trip?:string[]}){const g=G[team];if(ch===1)return clean(`${(data.digits||[]).join("")} ${data.meridiem||""}`)===clean(g.time);if(ch===2)return (g.courier as readonly string[]).some(x=>clean(x)===clean(data.answer||""));if(ch===3)return (data.trip?.length===6)&&g.trip.every((x,i)=>city(data.trip![i])===city(x));return ["ASHIRWAD","AASHIRWAD","ASHIRVAD","ASHIRVAAD"].includes(clean(data.answer||""))}
