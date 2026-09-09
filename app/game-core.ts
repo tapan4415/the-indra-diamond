@@ -8,5 +8,5 @@ export const C:Record<Ch,{r:string;t:string;q:string;d:string}>={1:{r:"I",t:"THE
 export const clean=(s:string)=>s.toUpperCase().trim().replace(/[^A-Z0-9]/g,"");
 export const city=(s:string)=>({MUMBAI:"BOMBAY",KOLKATA:"CALCUTTA",CHENNAI:"MADRAS",NEWDELHI:"DELHI"}[clean(s)]||clean(s));
 export function authenticate(value:string):Team|undefined{return (Object.keys(G) as Team[]).find(t=>G[t].key===clean(value))}
-export function recordFailure(previous:number,now:number){const attempts=previous+1;return {attempts,cooldownUntil:attempts>=3?now+300000:0}}
+export function recordFailure(previous:number,now:number){const attempts=previous+1;return {attempts,cooldownUntil:attempts>=2?now+300000:0}}
 export function validateConclusion(team:Team,ch:Ch,data:{answer?:string;digits?:string[];meridiem?:string;trip?:string[]}){const g=G[team];if(ch===1)return clean(`${(data.digits||[]).join("")} ${data.meridiem||""}`)===clean(g.time);if(ch===2)return (g.courier as readonly string[]).some(x=>clean(x)===clean(data.answer||""));if(ch===3)return (data.trip?.length===6)&&g.trip.every((x,i)=>city(data.trip![i])===city(x));return ["ASHIRWAD","AASHIRWAD","ASHIRVAD","ASHIRVAAD"].includes(clean(data.answer||""))}
