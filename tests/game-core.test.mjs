@@ -1,4 +1,4 @@
-import assert from "node:assert/strict";import test from "node:test";import {authenticate,C,CITY_OPTIONS,G,LOCK_DIGITS,recordFailure,validateConclusion} from "../app/game-core.ts";
+import assert from "node:assert/strict";import test from "node:test";import {authenticate,C,CITY_OPTIONS,COURIER_OPTIONS,G,LOCK_DIGITS,recordFailure,validateConclusion} from "../app/game-core.ts";
 import {access} from "node:fs/promises";
 const payload=(team,ch)=>{const g=G[team];if(ch===1)return{digits:g.time.replace(/\D/g,"").split(""),meridiem:"pm"};if(ch===2)return{answer:g.courier[0].toLowerCase()};if(ch===3)return{trip:g.trip.map(x=>x.toLowerCase())};return{answer:"a-shir-vaad"}};
 test("all four credentials are trimmed and case-insensitive",()=>{for(const team of Object.keys(G))assert.equal(authenticate(`  ${G[team].key.toLowerCase()}  `),team);assert.equal(authenticate("invalid"),undefined)});
@@ -13,3 +13,4 @@ test("journey dropdown has exactly 50 unique cities and every route answer",()=>
 test("lock components always reveal in fixed completion order",()=>{assert.deepEqual([...LOCK_DIGITS],["8","4","7","2"])});
 test("all four teams can solve the same chapter independently",()=>{for(const chapter of [1,2,3,4]){const submissions=Object.keys(G).map(team=>({team,result:validateConclusion(team,chapter,payload(team,chapter))}));assert.deepEqual(submissions.map(x=>x.result),[true,true,true,true],`chapter ${chapter}`)}assert.equal(validateConclusion("YELLOW",3,{trip:["Delhi","Madras","Cairo","London","New York","San Francisco"]}),true)});
 test("Green accepts Lalita Vaidya regardless of capitalization or spacing",()=>{for(const answer of ["Lalita Vaidya","lalita vaidya","  LALITA   VAIDYA  ","R32","r-32"])assert.equal(validateConclusion("GREEN",2,{answer}),true,answer)});
+test("courier dropdown has 24 unique choices and every team answer",()=>{assert.equal(COURIER_OPTIONS.length,24);assert.equal(new Set(COURIER_OPTIONS.map(x=>x.id)).size,24);for(const team of Object.keys(G))assert.equal(COURIER_OPTIONS.some(x=>x.name.toUpperCase()===G[team].courier[0]),true,team)});
