@@ -1,4 +1,6 @@
-// Intentionally empty by default.
-// Add Drizzle tables here when the site actually needs a database.
-// See examples/d1/db/schema.ts for an opt-in example.
-export {};
+import { integer, sqliteTable } from "drizzle-orm/sqlite-core";
+
+export const resetState = sqliteTable("reset_state", {
+  id: integer("id").primaryKey(),
+  generation: integer("generation").notNull().default(0),
+});

@@ -1,4 +1,4 @@
-import assert from "node:assert/strict";import test from "node:test";import {authenticate,C,CITY_OPTIONS,G,recordFailure,validateConclusion} from "../app/game-core.ts";
+import assert from "node:assert/strict";import test from "node:test";import {authenticate,C,CITY_OPTIONS,G,LOCK_DIGITS,recordFailure,validateConclusion} from "../app/game-core.ts";
 import {access} from "node:fs/promises";
 const payload=(team,ch)=>{const g=G[team];if(ch===1)return{digits:g.time.replace(/\D/g,"").split(""),meridiem:"pm"};if(ch===2)return{answer:g.courier[0].toLowerCase()};if(ch===3)return{trip:g.trip.map(x=>x.toLowerCase())};return{answer:"a-shir-vaad"}};
 test("all four credentials are trimmed and case-insensitive",()=>{for(const team of Object.keys(G))assert.equal(authenticate(`  ${G[team].key.toLowerCase()}  `),team);assert.equal(authenticate("invalid"),undefined)});
@@ -10,3 +10,4 @@ test("time and operation variants validate but other answers do not",()=>{assert
 test("second failure starts an exact five-minute team lock",()=>{const now=1_000_000;assert.deepEqual(recordFailure(0,now),{attempts:1,cooldownUntil:0});assert.deepEqual(recordFailure(1,now),{attempts:2,cooldownUntil:1_300_000})});
 test("all four private fragments and final reconstruction image exist",async()=>{for(const name of ["fragment-1.jpg","fragment-2.jpg","fragment-3.jpg","fragment-4.jpg","final-location.jpg"])await access(new URL(`../public/${name}`,import.meta.url))});
 test("journey dropdown has exactly 50 unique cities and every route answer",()=>{assert.equal(CITY_OPTIONS.length,50);assert.equal(new Set(CITY_OPTIONS).size,50);const choices=CITY_OPTIONS.map(x=>x.toUpperCase());for(const team of Object.keys(G))for(const city of G[team].trip)assert.equal(choices.includes(city.toUpperCase()),true,`${city} missing`)});
+test("lock components always reveal in fixed completion order",()=>{assert.deepEqual([...LOCK_DIGITS],["8","4","7","2"])});
