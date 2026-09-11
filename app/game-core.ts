@@ -7,8 +7,6 @@ YELLOW:{key:"SAFFRON47",route:[["2563",4],["7655",3],["4164",2],["8353",1]] as [
 export const C:Record<Ch,{r:string;t:string;q:string;d:string}>={1:{r:"I",t:"THE MISSING HOUR",q:"AT WHAT EXACT TIME WAS THE INDRA DIAMOND REMOVED FROM SECURED TREASURY CUSTODY?",d:"8"},2:{r:"II",t:"THE COURIER",q:"IDENTIFY THE INDIVIDUAL WHO CARRIED THE BLACK DIPLOMATIC CASE FROM THE SECURED VAULT.",d:"4"},3:{r:"III",t:"THE JOURNEY",q:"RECONSTRUCT THE SIX LOCATIONS THROUGH WHICH THE SECURED DIPLOMATIC CONSIGNMENT PASSED, IN CHRONOLOGICAL ORDER.",d:"7"},4:{r:"IV",t:"THE CUSTODIAN",q:"WHAT ONE-WORD CODENAME WAS ASSIGNED TO THE CLASSIFIED OPERATION?",d:"2"}};
 export const LOCK_DIGITS=["8","4","7","2"] as const;
 export const COURIER_OPTIONS=[
-  {name:"Leela Varma",id:"T27"},{name:"Lakshman Vohra",id:"S14"},
-  {name:"Lalita Vaidya",id:"R32"},{name:"Lokesh Verma",id:"G18"},
   {name:"Anita Deshmukh",id:"K11"},{name:"Devendra Rao",id:"M24"},
   {name:"Meera Kapoor",id:"P19"},{name:"Vikram Sen",id:"N36"},
   {name:"Asha Mehta",id:"B17"},{name:"Arjun Malhotra",id:"D29"},
@@ -19,6 +17,8 @@ export const COURIER_OPTIONS=[
   {name:"Nirmala Das",id:"X23"},{name:"Pranav Dutt",id:"Y38"},
   {name:"Ravi Khanna",id:"A26"},{name:"Sanjay Menon",id:"C34"},
   {name:"Tara Anand",id:"E21"},{name:"Uma Reddy",id:"Z33"},
+  {name:"Leela Varma",id:"T27"},{name:"Lakshman Vohra",id:"S14"},
+  {name:"Lalita Vaidya",id:"R32"},{name:"Lokesh Verma",id:"G18"},
 ] as const;
 export const clean=(s:string)=>s.toUpperCase().trim().replace(/[^A-Z0-9]/g,"");
 export const CITY_OPTIONS=["Delhi","Bombay","Colombo","London","Vancouver","San Francisco","Karachi","Alexandria","Boston","Calcutta","Singapore","Honolulu","Madras","Cairo","New York","Agra","Ahmedabad","Amritsar","Bangalore","Bangkok","Beirut","Benares","Berlin","Brussels","Cape Town","Chicago","Cochin","Copenhagen","Damascus","Darjeeling","Dhaka","Dubai","Edinburgh","Geneva","Goa","Hong Kong","Istanbul","Jaipur","Johannesburg","Kathmandu","Lisbon","Lucknow","Manila","Marseille","Moscow","Paris","Rangoon","Rome","Sydney","Tokyo"].sort((a,b)=>a.localeCompare(b));
